@@ -59,16 +59,20 @@ int main (int argc, const char * argv[])
     cout << "GMM Trained in " << gmm.getNumTrainingIterationsToConverge() << " iterations.\n\n";
     
     //Save the model to a file
-    if( !gmm.save( std::fstream("GMM.grt") ) ){
+    std::fstream model_out("GMM.grt");
+    if( !gmm.save(model_out) ){
         cout << "Failed to save model to file!\n";
         return EXIT_FAILURE;
     }
+    model_out.close();
     
     //Load the model back from a file
-    if( !gmm.load( std::fstream("GMM.grt") ) ){
+    std::fstream model_in("GMM.grt");
+    if( !gmm.load( model_in ) ){
         cout << "Failed to load model from file!\n";
         return EXIT_FAILURE;
     }
+    model_in.close();
     
 	//Get the clusters from the GMM instance and print them
     //Note that the clusters may not be in the same order as they appear in the original model used to generate the training data
