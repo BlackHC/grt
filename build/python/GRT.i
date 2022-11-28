@@ -6,9 +6,9 @@
 
 %{
 /* Includes the header in the wrapper code */
-#include "../GRT/GRT.h"
-#include "../GRT/Util/GRTTypedefs.h"
-#include "../GRT/DataStructures/Vector.h"
+#include "GRT/GRT.h"
+#include "GRT/Util/GRTTypedefs.h"
+#include "GRT/DataStructures/Vector.h"
 
 #define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include "numpy/npy_common.h"
@@ -40,14 +40,14 @@ using std::string;
 %apply float { GRT::Float };
 
 /* Parse the header file to generate wrappers */
-%include "../GRT/Util/GRTTypedefs.h"
-%include "../GRT/Util/GRTVersionInfo.h"
-%include "../GRT/Util/GRTCommon.h"
-%include "../GRT/Util/Util.h"
-%include "../GRT/CoreModules/GRTBase.h"
+%include "GRT/Util/GRTTypedefs.h"
+%include "GRT/Util/GRTVersionInfo.h"
+%include "GRT/Util/GRTCommon.h"
+%include "GRT/Util/Util.h"
+%include "GRT/CoreModules/GRTBase.h"
 
 %template(UINTVector) std::vector<UINT>;
-%include "../GRT/DataStructures/Vector.h"
+%include "GRT/DataStructures/Vector.h"
 %template(VectorTUINT) GRT::Vector<UINT>;
 %template(VectorTFloat) GRT::Vector<Float>;
 %template(VectorTVectorFloat) GRT::Vector<GRT::VectorFloat>;
@@ -81,7 +81,7 @@ using std::string;
     $1 = PyList_Check($input);
 %}
 
-%include "../GRT/DataStructures/VectorFloat.h"
+%include "GRT/DataStructures/VectorFloat.h"
 // From GRT::VectorFloat to numpy.array
 %typemap(out) GRT::Vector<Float>,
               GRT::VectorFloat,
@@ -194,9 +194,9 @@ using std::string;
   }
 %}
 
-%include "../GRT/DataStructures/Matrix.h"
+%include "GRT/DataStructures/Matrix.h"
 %template(MatrixTFloat) GRT::Matrix<Float>;
-%include "../GRT/DataStructures/MatrixFloat.h"
+%include "GRT/DataStructures/MatrixFloat.h"
 
 // From GRT::MatrixFloat to numpy.array
 %typemap(out) GRT::Matrix<Float>,
@@ -334,127 +334,127 @@ using std::string;
 %}
 
 
-%include "../GRT/DataStructures/ClassificationData.h"
+%include "GRT/DataStructures/ClassificationData.h"
 %extend GRT::ClassificationData {
     GRT::ClassificationSample& get(const int &i){
         return $self->operator[](i);
     }
 }
 
-%include "../GRT/DataStructures/ClassificationSample.h"
+%include "GRT/DataStructures/ClassificationSample.h"
 
-%include "../GRT/DataStructures/TimeSeriesClassificationData.h"
+%include "GRT/DataStructures/TimeSeriesClassificationData.h"
 %extend GRT::TimeSeriesClassificationData {
     GRT::TimeSeriesClassificationSample& get(const int &i){
         return $self->operator[](i);
     }
 }
 
-%include "../GRT/DataStructures/TimeSeriesClassificationSample.h"
-%include "../GRT/DataStructures/ClassificationDataStream.h"
-%include "../GRT/DataStructures/UnlabelledData.h"
+%include "GRT/DataStructures/TimeSeriesClassificationSample.h"
+%include "GRT/DataStructures/ClassificationDataStream.h"
+%include "GRT/DataStructures/UnlabelledData.h"
 
-%include "../GRT/CoreModules/MLBase.h"
-%include "../GRT/CoreModules/Classifier.h"
-%include "../GRT/CoreModules/PostProcessing.h"
-%include "../GRT/CoreModules/Clusterer.h"
-%include "../GRT/CoreModules/FeatureExtraction.h"
-%include "../GRT/CoreModules/PreProcessing.h"
-%include "../GRT/CoreModules/Regressifier.h"
+%include "GRT/CoreModules/MLBase.h"
+%include "GRT/CoreModules/Classifier.h"
+%include "GRT/CoreModules/PostProcessing.h"
+%include "GRT/CoreModules/Clusterer.h"
+%include "GRT/CoreModules/FeatureExtraction.h"
+%include "GRT/CoreModules/PreProcessing.h"
+%include "GRT/CoreModules/Regressifier.h"
 
-%include "../GRT/CoreModules/GestureRecognitionPipeline.h"
-%include "../GRT/ClassificationModules/KNN/KNN.h"
-%include "../GRT/ClassificationModules/AdaBoost/WeakClassifiers/WeakClassifier.h"
-%include "../GRT/ClassificationModules/AdaBoost/WeakClassifiers/DecisionStump.h"
-%include "../GRT/ClassificationModules/AdaBoost/WeakClassifiers/RadialBasisFunction.h"
-%include "../GRT/ClassificationModules/AdaBoost/AdaBoost.h"
-%include "../GRT/ClassificationModules/ANBC/ANBC_Model.h"
-%include "../GRT/ClassificationModules/ANBC/ANBC.h"
-%include "../GRT/ClassificationModules/BAG/BAG.h"
-%include "../GRT/CoreAlgorithms/Tree/Node.h"
-%include "../GRT/CoreAlgorithms/Tree/Tree.h"
-%include "../GRT/ClassificationModules/DecisionTree/DecisionTreeNode.h"
-%include "../GRT/ClassificationModules/DecisionTree/DecisionTreeThresholdNode.h"
-%include "../GRT/ClassificationModules/DecisionTree/DecisionTreeTripleFeatureNode.h"
-%include "../GRT/ClassificationModules/DecisionTree/DecisionTreeClusterNode.h"
-%include "../GRT/ClassificationModules/DecisionTree/DecisionTree.h"
-%include "../GRT/ClassificationModules/DTW/DTW.h"
-%include "../GRT/CoreAlgorithms/ParticleFilter/Particle.h"
-%include "../GRT/CoreAlgorithms/ParticleFilter/ParticleFilter.h"
-%include "../GRT/ClassificationModules/FiniteStateMachine/FSMParticle.h"
-%include "../GRT/ClassificationModules/FiniteStateMachine/FiniteStateMachine.h"
-%include "../GRT/ClassificationModules/GMM/MixtureModel.h"
-%include "../GRT/ClassificationModules/GMM/GMM.h"
-%include "../GRT/ClassificationModules/HMM/HMMEnums.h"
-%include "../GRT/ClassificationModules/HMM/ContinuousHiddenMarkovModel.h"
-%include "../GRT/ClassificationModules/HMM/DiscreteHiddenMarkovModel.h"
-%include "../GRT/ClassificationModules/HMM/HMM.h"
-%include "../GRT/ClassificationModules/KNN/KNN.h"
-%include "../GRT/ClassificationModules/MinDist/MinDistModel.h"
-%include "../GRT/ClassificationModules/MinDist/MinDist.h"
-%include "../GRT/ClassificationModules/ParticleClassifier/ParticleClassifierParticleFilter.h"
-%include "../GRT/ClassificationModules/ParticleClassifier/ParticleClassifier.h"
-%include "../GRT/ClassificationModules/RandomForests/RandomForests.h"
-%include "../GRT/ClassificationModules/Softmax/SoftmaxModel.h"
-%include "../GRT/ClassificationModules/Softmax/Softmax.h"
-%include "../GRT/ClassificationModules/SVM/SVM.h"
-%include "../GRT/ClassificationModules/SwipeDetector/SwipeDetector.h"
+%include "GRT/CoreModules/GestureRecognitionPipeline.h"
+%include "GRT/ClassificationModules/KNN/KNN.h"
+%include "GRT/ClassificationModules/AdaBoost/WeakClassifiers/WeakClassifier.h"
+%include "GRT/ClassificationModules/AdaBoost/WeakClassifiers/DecisionStump.h"
+%include "GRT/ClassificationModules/AdaBoost/WeakClassifiers/RadialBasisFunction.h"
+%include "GRT/ClassificationModules/AdaBoost/AdaBoost.h"
+%include "GRT/ClassificationModules/ANBC/ANBC_Model.h"
+%include "GRT/ClassificationModules/ANBC/ANBC.h"
+%include "GRT/ClassificationModules/BAG/BAG.h"
+%include "GRT/CoreAlgorithms/Tree/Node.h"
+%include "GRT/CoreAlgorithms/Tree/Tree.h"
+%include "GRT/ClassificationModules/DecisionTree/DecisionTreeNode.h"
+%include "GRT/ClassificationModules/DecisionTree/DecisionTreeThresholdNode.h"
+%include "GRT/ClassificationModules/DecisionTree/DecisionTreeTripleFeatureNode.h"
+%include "GRT/ClassificationModules/DecisionTree/DecisionTreeClusterNode.h"
+%include "GRT/ClassificationModules/DecisionTree/DecisionTree.h"
+%include "GRT/ClassificationModules/DTW/DTW.h"
+%include "GRT/CoreAlgorithms/ParticleFilter/Particle.h"
+%include "GRT/CoreAlgorithms/ParticleFilter/ParticleFilter.h"
+%include "GRT/ClassificationModules/FiniteStateMachine/FSMParticle.h"
+%include "GRT/ClassificationModules/FiniteStateMachine/FiniteStateMachine.h"
+%include "GRT/ClassificationModules/GMM/MixtureModel.h"
+%include "GRT/ClassificationModules/GMM/GMM.h"
+%include "GRT/ClassificationModules/HMM/HMMEnums.h"
+%include "GRT/ClassificationModules/HMM/ContinuousHiddenMarkovModel.h"
+%include "GRT/ClassificationModules/HMM/DiscreteHiddenMarkovModel.h"
+%include "GRT/ClassificationModules/HMM/HMM.h"
+%include "GRT/ClassificationModules/KNN/KNN.h"
+%include "GRT/ClassificationModules/MinDist/MinDistModel.h"
+%include "GRT/ClassificationModules/MinDist/MinDist.h"
+%include "GRT/ClassificationModules/ParticleClassifier/ParticleClassifierParticleFilter.h"
+%include "GRT/ClassificationModules/ParticleClassifier/ParticleClassifier.h"
+%include "GRT/ClassificationModules/RandomForests/RandomForests.h"
+%include "GRT/ClassificationModules/Softmax/SoftmaxModel.h"
+%include "GRT/ClassificationModules/Softmax/Softmax.h"
+%include "GRT/ClassificationModules/SVM/SVM.h"
+%include "GRT/ClassificationModules/SwipeDetector/SwipeDetector.h"
 
-%include "../GRT/ClusteringModules/ClusterTree/ClusterTreeNode.h"
-%include "../GRT/ClusteringModules/ClusterTree/ClusterTree.h"
-%include "../GRT/ClusteringModules/GaussianMixtureModels/GaussianMixtureModels.h"
-%include "../GRT/ClusteringModules/HierarchicalClustering/HierarchicalClustering.h"
-%include "../GRT/ClusteringModules/KMeans/KMeans.h"
-%include "../GRT/ClusteringModules/SelfOrganizingMap/SelfOrganizingMap.h"
+%include "GRT/ClusteringModules/ClusterTree/ClusterTreeNode.h"
+%include "GRT/ClusteringModules/ClusterTree/ClusterTree.h"
+%include "GRT/ClusteringModules/GaussianMixtureModels/GaussianMixtureModels.h"
+%include "GRT/ClusteringModules/HierarchicalClustering/HierarchicalClustering.h"
+%include "GRT/ClusteringModules/KMeans/KMeans.h"
+%include "GRT/ClusteringModules/SelfOrganizingMap/SelfOrganizingMap.h"
 
-%include "../GRT/FeatureExtractionModules/KMeansQuantizer/KMeansQuantizer.h"
-%include "../GRT/FeatureExtractionModules/FFT/FastFourierTransform.h"
-%include "../GRT/FeatureExtractionModules/FFT/FFT.h"
+%include "GRT/FeatureExtractionModules/KMeansQuantizer/KMeansQuantizer.h"
+%include "GRT/FeatureExtractionModules/FFT/FastFourierTransform.h"
+%include "GRT/FeatureExtractionModules/FFT/FFT.h"
 
 %template(STDVectorOfFastFourierTransform) std::vector<GRT::FastFourierTransform>;
 %template(GRTVectorOfFastFourierTransform) GRT::Vector<GRT::FastFourierTransform>;
 
-%include "../GRT/FeatureExtractionModules/FFT/FFTFeatures.h"
-%include "../GRT/FeatureExtractionModules/EnvelopeExtractor/EnvelopeExtractor.h"
-%include "../GRT/FeatureExtractionModules/KMeansFeatures/KMeansFeatures.h"
-%include "../GRT/FeatureExtractionModules/MovementIndex/MovementIndex.h"
-%include "../GRT/FeatureExtractionModules/MovementTrajectoryFeatures/MovementTrajectoryFeatures.h"
-%include "../GRT/FeatureExtractionModules/ZeroCrossingCounter/ZeroCrossingCounter.h"
-%include "../GRT/FeatureExtractionModules/PCA/PCA.h"
-%include "../GRT/FeatureExtractionModules/RBMQuantizer/RBMQuantizer.h"
-%include "../GRT/FeatureExtractionModules/SOMQuantizer/SOMQuantizer.h"
-%include "../GRT/FeatureExtractionModules/TimeDomainFeatures/TimeDomainFeatures.h"
-%include "../GRT/FeatureExtractionModules/TimeseriesBuffer/TimeseriesBuffer.h"
+%include "GRT/FeatureExtractionModules/FFT/FFTFeatures.h"
+%include "GRT/FeatureExtractionModules/EnvelopeExtractor/EnvelopeExtractor.h"
+%include "GRT/FeatureExtractionModules/KMeansFeatures/KMeansFeatures.h"
+%include "GRT/FeatureExtractionModules/MovementIndex/MovementIndex.h"
+%include "GRT/FeatureExtractionModules/MovementTrajectoryFeatures/MovementTrajectoryFeatures.h"
+%include "GRT/FeatureExtractionModules/ZeroCrossingCounter/ZeroCrossingCounter.h"
+%include "GRT/FeatureExtractionModules/PCA/PCA.h"
+%include "GRT/FeatureExtractionModules/RBMQuantizer/RBMQuantizer.h"
+%include "GRT/FeatureExtractionModules/SOMQuantizer/SOMQuantizer.h"
+%include "GRT/FeatureExtractionModules/TimeDomainFeatures/TimeDomainFeatures.h"
+%include "GRT/FeatureExtractionModules/TimeseriesBuffer/TimeseriesBuffer.h"
 
-%include "../GRT/PostProcessingModules/ClassLabelChangeFilter.h"
-%include "../GRT/PostProcessingModules/ClassLabelFilter.h"
-%include "../GRT/PostProcessingModules/ClassLabelTimeoutFilter.h"
+%include "GRT/PostProcessingModules/ClassLabelChangeFilter.h"
+%include "GRT/PostProcessingModules/ClassLabelFilter.h"
+%include "GRT/PostProcessingModules/ClassLabelTimeoutFilter.h"
 
-%include "../GRT/PreProcessingModules/DeadZone.h"
-%include "../GRT/PreProcessingModules/Derivative.h"
-%include "../GRT/PreProcessingModules/DoubleMovingAverageFilter.h"
-%include "../GRT/PreProcessingModules/FIRFilter.h"
-%include "../GRT/PreProcessingModules/HighPassFilter.h"
-%include "../GRT/PreProcessingModules/LeakyIntegrator.h"
-%include "../GRT/PreProcessingModules/LowPassFilter.h"
-%include "../GRT/PreProcessingModules/MedianFilter.h"
-%include "../GRT/PreProcessingModules/MovingAverageFilter.h"
-%include "../GRT/PreProcessingModules/RMSFilter.h"
-%include "../GRT/PreProcessingModules/SavitzkyGolayFilter.h"
-%include "../GRT/PreProcessingModules/WeightedAverageFilter.h"
+%include "GRT/PreProcessingModules/DeadZone.h"
+%include "GRT/PreProcessingModules/Derivative.h"
+%include "GRT/PreProcessingModules/DoubleMovingAverageFilter.h"
+%include "GRT/PreProcessingModules/FIRFilter.h"
+%include "GRT/PreProcessingModules/HighPassFilter.h"
+%include "GRT/PreProcessingModules/LeakyIntegrator.h"
+%include "GRT/PreProcessingModules/LowPassFilter.h"
+%include "GRT/PreProcessingModules/MedianFilter.h"
+%include "GRT/PreProcessingModules/MovingAverageFilter.h"
+%include "GRT/PreProcessingModules/RMSFilter.h"
+%include "GRT/PreProcessingModules/SavitzkyGolayFilter.h"
+%include "GRT/PreProcessingModules/WeightedAverageFilter.h"
 
-%include "../GRT/DataStructures/RegressionSample.h"
-%include "../GRT/DataStructures/RegressionData.h"
+%include "GRT/DataStructures/RegressionSample.h"
+%include "GRT/DataStructures/RegressionData.h"
 %extend GRT::RegressionData {
     GRT::RegressionSample& get(const int &i){
         return $self->operator[](i);
     }
 }
 
-%include "../GRT/RegressionModules/ArtificialNeuralNetworks/MLP/Neuron.h"
-%include "../GRT/RegressionModules/ArtificialNeuralNetworks/MLP/MLP.h"
-%include "../GRT/RegressionModules/LinearRegression/LinearRegression.h"
-%include "../GRT/RegressionModules/LogisticRegression/LogisticRegression.h"
-%include "../GRT/RegressionModules/MultidimensionalRegression/MultidimensionalRegression.h"
-%include "../GRT/RegressionModules/RegressionTree/RegressionTreeNode.h"
-%include "../GRT/RegressionModules/RegressionTree/RegressionTree.h"
+%include "GRT/RegressionModules/ArtificialNeuralNetworks/MLP/Neuron.h"
+%include "GRT/RegressionModules/ArtificialNeuralNetworks/MLP/MLP.h"
+%include "GRT/RegressionModules/LinearRegression/LinearRegression.h"
+%include "GRT/RegressionModules/LogisticRegression/LogisticRegression.h"
+%include "GRT/RegressionModules/MultidimensionalRegression/MultidimensionalRegression.h"
+%include "GRT/RegressionModules/RegressionTree/RegressionTreeNode.h"
+%include "GRT/RegressionModules/RegressionTree/RegressionTree.h"
